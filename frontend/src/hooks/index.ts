@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
 import { BACKEND_URL } from "../../config";
 import axios from "axios";
-
+import { useBlogStore } from "../store/BlogStore";
+import { useFullBlogStore } from "../store/FullBlogStore";
+import type { FullBlogPost } from "../store/FullBlogStore";
 
 export interface Blog{
     "title": string,
@@ -13,20 +15,31 @@ export interface Blog{
 }
 
 export const useBlog = ({id}:{id:string} )=>{
-    const [blog,setBlog] = useState<Blog>();
+    const {blogsById,addBlog} = useFullBlogStore();
     const [loading,setLoading] = useState(true);
+    const [blog, setBlog] = useState<FullBlogPost | null>(null);
 
     useEffect(()=>{
+
+        const cachedBlog = blogsById[id];
+        if (cachedBlog) {
+            setBlog(cachedBlog);
+            setLoading(false);
+            return; 
+        }
+
         axios.get(`${BACKEND_URL}/api/v1/post/${id}`,{
             headers:{
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
         })
         .then(response => {
-            setBlog(response.data.post);
+            const fetchedBlog = response.data.post;
+            addBlog(fetchedBlog);
+            setBlog(fetchedBlog);
             setLoading(false);
         })
-    },[])
+    },[id,blogsById,addBlog]);
 
     return{
         loading,
@@ -36,16 +49,23 @@ export const useBlog = ({id}:{id:string} )=>{
 
 export const useBlogs = () => {
     const[loading, setLoading] = useState(true);
-    const[blogs,setBlogs] = useState<Blog[]>([]);
+    const{blogs,setBlog} = useBlogStore();
 
     useEffect(()=>{
+
+        if(blogs.length > 0){
+            setLoading(false);
+            return
+        }
+
         axios.get(`${BACKEND_URL}/api/v1/post/bulk`,{
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         }).then(response => {
-            setBlogs(response.data.posts);
+            setBlog(response.data.posts);
             setLoading(false);
          })
-    },[])
+    },[blogs,setBlog]);
+
     return{
         loading,
         blogs
