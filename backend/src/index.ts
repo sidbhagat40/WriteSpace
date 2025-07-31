@@ -12,6 +12,13 @@ const app = new Hono<{
   Bindings: Bindings,
 }>()
 
+app.use('/*', cors({
+  origin: 'https://write-space-5kqw.vercel.app',
+  allowHeaders: ['Authorization', 'Content-Type'],
+  allowMethods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+}))
+
 app.use("/*", cors());
 app.route("/api/v1/user", userRouter);
 app.route("/api/v1/post", postRouter);
