@@ -38,7 +38,7 @@ export const Landing = () => {
                 </div>
 
                 <div className="">
-                    <img className="max-w-lg h-auto rounded-lg shadow-lg" src="/src/assets/images/WhyInvest2.jpg" alt="People collaborating on ideas" />
+                    <img className="max-w-lg h-auto rounded-lg shadow-lg" src="/images/WhyInvest2.jpg" alt="People collaborating on ideas" />
                 </div>
 
             </div>
