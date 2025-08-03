@@ -1,1 +1,15 @@
+@font-face {
+    font-family: Lobster;
+    src: url("../src/assets/fonts/Lobster-Regular.ttf");
+}
+@font-face {
+    font-family: Playfair;
+    src: url(../src/assets/fonts/PlayfairDisplay-Regular.ttf);
+}
+
 @import "tailwindcss";
+
+@theme {
+    --font-lobster : Lobster, "sans-serif";
+    --font-playfair : Playfair, "sans-serif";
+}
