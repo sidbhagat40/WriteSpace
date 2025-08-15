@@ -138,6 +138,9 @@ postRouter.get('/bulk', async (c) => {
         const prisma = getPrismaClient(c.env.DATABASE_URL);
 
         const posts = await prisma.post.findMany({
+            orderBy:{
+              createdAt:'desc'
+            },
             select:{
                 id: true,
                 title: true,
