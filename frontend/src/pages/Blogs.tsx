@@ -26,6 +26,7 @@
             <div className="flex justify-center pt-2">
             <div className="max-w-xl">
                 {blogs.map(blog => <BlogCard
+                key={blog.id}
                 id={blog.id}
                 authorName ={blog.author.name}
                 title={blog.title}
