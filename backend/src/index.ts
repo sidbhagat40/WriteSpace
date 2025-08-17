@@ -21,7 +21,11 @@ if (process.env.NODE_ENV === 'production') {
         credentials: true,
     }))
 } else {
-    app.use("/*", cors());
+    app.use("/*", cors({
+        origin: 'http://localhost:5173', // Your local frontend URL
+        credentials: true,
+        allowHeaders: ['Content-Type', 'Authorization'] // Good to be explicit
+    }));
 }
 app.route("/api/v1/user", userRouter);
 app.route("/api/v1/post", postRouter);

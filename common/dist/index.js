@@ -16,7 +16,15 @@ exports.signinInput = zod_1.default.object({
 });
 exports.createBlogInput = zod_1.default.object({
     title: zod_1.default.string(),
-    content: zod_1.default.string(),
+    content: zod_1.default.object({
+        time: zod_1.default.number(),
+        blocks: zod_1.default.array(zod_1.default.object({
+            id: zod_1.default.string(),
+            type: zod_1.default.string(),
+            data: zod_1.default.record(zod_1.default.string(), zod_1.default.any()),
+        })),
+        version: zod_1.default.string()
+    })
 });
 exports.updateBlog = zod_1.default.object({
     id: zod_1.default.string(),

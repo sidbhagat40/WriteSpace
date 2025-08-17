@@ -13,7 +13,17 @@ export const signinInput = z.object({
 
 export const createBlogInput = z.object({
     title : z.string(),
-    content: z.string(),
+    content: z.object({
+        time: z.number(),
+        blocks: z.array(
+            z.object({
+                id: z.string(),
+                type: z.string(),
+                data: z.record(z.string(),z.any()), 
+            })
+        ),
+        version: z.string()
+    })
 })
 
 export const updateBlog = z.object({

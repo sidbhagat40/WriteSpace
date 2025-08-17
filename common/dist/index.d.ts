@@ -10,7 +10,15 @@ export declare const signinInput: z.ZodObject<{
 }, z.core.$strip>;
 export declare const createBlogInput: z.ZodObject<{
     title: z.ZodString;
-    content: z.ZodString;
+    content: z.ZodObject<{
+        time: z.ZodNumber;
+        blocks: z.ZodArray<z.ZodObject<{
+            id: z.ZodString;
+            type: z.ZodString;
+            data: z.ZodRecord<z.ZodString, z.ZodAny>;
+        }, z.core.$strip>>;
+        version: z.ZodString;
+    }, z.core.$strip>;
 }, z.core.$strip>;
 export declare const updateBlog: z.ZodObject<{
     id: z.ZodString;
