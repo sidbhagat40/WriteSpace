@@ -1,7 +1,13 @@
 import type { Blog } from "../hooks"
 import { Appbar } from "./Appbar"
+import type { OutputData } from "@editorjs/editorjs"
 
 export const FullBlog = ({blog}:{blog: Blog}) => {
+
+    const previewText = (content : OutputData) =>{
+        const paragraph = content.blocks.find(block => block.type === 'paragraph');
+        return paragraph ? paragraph.data.text : '';
+    }
 
        return <div>
         <Appbar/>
@@ -15,7 +21,7 @@ export const FullBlog = ({blog}:{blog: Blog}) => {
             Posted on 14th July 25
         </div>
         <div className="pt-8 text-xl font-serif text-gray-800 leading-relaxed">
-            {blog.content}
+            {previewText(blog.content)}
         </div>
             </div>
 

@@ -1,9 +1,10 @@
 import {create} from "zustand";
+import type { OutputData } from "@editorjs/editorjs";
 
 export interface FullBlogPost{
     id: string,
     title: string,
-    content: string,
+    content: OutputData,
     author: {
         name: string
     };

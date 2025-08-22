@@ -61,18 +61,16 @@ postRouter.post('/', async (c) => {
     const userId = c.get("userId");
 
     const { success } = createBlogInput.safeParse(body);
-    console.log("first step");
+    
     if(!success){
         return c.json({
             error: "Invalid Inputs"
         })
     }
-    console.log("second step");
 
     if (!body.title || !body.content) {
       return c.json({ error: "Title and content are required" }, 400)
     }
-    console.log("third step");
 
     const post = await prisma.post.create({
       data: {
@@ -82,8 +80,6 @@ postRouter.post('/', async (c) => {
         published: body.published || false 
       }
     })
-
-    console.log("4th step");
 
     return c.json({
       id: post.id,
@@ -150,6 +146,7 @@ postRouter.get('/bulk', async (c) => {
                 id: true,
                 title: true,
                 content: true,
+                createdAt:true,
                 author:{
                   select:{
                     name:true

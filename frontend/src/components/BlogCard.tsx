@@ -8,13 +8,13 @@ interface BlogCardProps{
     publishedDate: string
 }
 
-
 export const BlogCard = ({
     id,
     authorName,
     title,
     content,
     publishedDate
+
 }:BlogCardProps) => {
     return <Link to={`/posts/${id}`}>
      <div className="border-b border-slate-200 pb-5 cursor-pointer">
@@ -76,3 +76,4 @@ export function Avatar({ name, size = 6 }: { name: string; size?: number }) {
     </div>
   );
 }
+

@@ -4,10 +4,11 @@ import axios from "axios";
 import { useBlogStore } from "../store/BlogStore";
 import { useFullBlogStore } from "../store/FullBlogStore";
 import type { FullBlogPost } from "../store/FullBlogStore";
+import type { OutputData } from "@editorjs/editorjs";
 
 export interface Blog{
     "title": string,
-    "content": string,
+    "content": OutputData,
     "id": string,
     "author":{
         "name": string

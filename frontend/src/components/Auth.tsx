@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, type FormEvent } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import type { SignupInput } from "sidbhagat_medium"
 import {BACKEND_URL} from "../../config"
@@ -14,7 +14,9 @@ export const Auth = ({type}:{type: "signup"  |  "signin"}) => {
     })
     const navigate = useNavigate();
     
-    async function sendRequest(){
+    async function sendRequest(e : FormEvent){
+        
+        e.preventDefault();
         
         try{
             const response = await axios.post(`${BACKEND_URL}/api/v1/user/${type ===  "signup" ? "signup" : "signin"}`, postInputs);
@@ -29,7 +31,8 @@ export const Auth = ({type}:{type: "signup"  |  "signin"}) => {
         }
     }
 
-    return <div className="flex justify-center h-screen flex-col">
+    return <form onSubmit={sendRequest}>
+    <div className="flex justify-center h-screen flex-col">
         <div className="flex justify-center">
             <div className="text-4xl font-semibold">
                 {type === "signup" ? "Create an Account" : "Sign In"}
@@ -64,10 +67,11 @@ export const Auth = ({type}:{type: "signup"  |  "signin"}) => {
                 })
             }}
             />
-            <button type="button" onClick={sendRequest} className="w-80 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">{type === "signup" ? "Sign Up" : "Sign In"}</button>
+            <button type="submit" onClick={sendRequest} className="w-80 text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">{type === "signup" ? "Sign Up" : "Sign In"}</button>
             </div>
         </div>
     </div>
+    </form>
 }
 
 interface LabelledInputType {

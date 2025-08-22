@@ -1,9 +1,11 @@
 import { create } from 'zustand';
+import type { OutputData } from '@editorjs/editorjs';
 
 export interface blogPost{
     id : string,
     title: string,
-    content: string,
+    content: OutputData,
+    createdAt: string,
     author: {
         name: string
     };
