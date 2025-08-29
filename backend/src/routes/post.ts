@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from 'hono/jwt'
 import { createBlogInput,updateBlog } from 'sidbhagat_medium'
+import { getCookie } from 'hono/cookie'
 
 type JwtPayload = {
   id: string;
@@ -31,8 +32,8 @@ const getPrismaClient = (databaseUrl: string) => {
 
 // Middleware
 postRouter.use('/*', async (c, next) => {
-  const authHeader = c.req.header("Authorization") || ""
-  const token = authHeader.split(' ')[1] // Extract token from "Bearer <token>"
+
+  const token = getCookie(c,'authToken');
   
   if (!token) {
     return c.json({ error: "Authorization token missing" }, 401)
@@ -180,6 +181,7 @@ postRouter.get('/:id', async (c) => {
             select: {
                 title: true,
                 content: true,
+                createdAt:true,
                 id:true,
                 author:{
                   select:{

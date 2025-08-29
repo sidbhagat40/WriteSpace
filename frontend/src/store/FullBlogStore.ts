@@ -5,6 +5,7 @@ export interface FullBlogPost{
     id: string,
     title: string,
     content: OutputData,
+    createdAt: string,
     author: {
         name: string
     };

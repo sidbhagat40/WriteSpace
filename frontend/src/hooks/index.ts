@@ -9,6 +9,7 @@ import type { OutputData } from "@editorjs/editorjs";
 export interface Blog{
     "title": string,
     "content": OutputData,
+    "createdAt": string,
     "id": string,
     "author":{
         "name": string
@@ -29,11 +30,7 @@ export const useBlog = ({id}:{id:string} )=>{
             return; 
         }
 
-        axios.get(`${BACKEND_URL}/api/v1/post/${id}`,{
-            headers:{
-                Authorization: `Bearer ${localStorage.getItem("token")}`
-            }
-        })
+        axios.get(`${BACKEND_URL}/api/v1/post/${id}`)
         .then(response => {
             const fetchedBlog = response.data.post;
             addBlog(fetchedBlog);
@@ -59,9 +56,7 @@ export const useBlogs = () => {
             return
         }
 
-        axios.get(`${BACKEND_URL}/api/v1/post/bulk`,{
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-        }).then(response => {
+        axios.get(`${BACKEND_URL}/api/v1/post/bulk`).then(response => {
             setBlog(response.data.posts);
             setLoading(false);
          })
@@ -72,3 +67,5 @@ export const useBlogs = () => {
         blogs
     }
 }   
+
+
