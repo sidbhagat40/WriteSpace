@@ -15,7 +15,7 @@ const app = new Hono<{
 
 if (process.env.NODE_ENV === 'production') {
     app.use('/*', cors({
-        origin: 'https://write-space-5kqw.vercel.app',
+        origin: 'https://write-space-omega.vercel.app',
         allowHeaders: ['Authorization', 'Content-Type'],
         allowMethods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
         credentials: true,

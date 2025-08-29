@@ -52,7 +52,7 @@ const Editor: React.FC<EditorProps> = ({ data, onChange, holder }) => {
         inlineToolbar: ['bold', 'italic', 'underline', 'link', 'marker', 'inlineCode'],
         
         data: data,
-        async onChange(api, event) {
+        async onChange(api, _event) {
           const savedData = await api.saver.save();
           onChange(savedData);
         },
