@@ -13,20 +13,24 @@ const app = new Hono<{
   Bindings: Bindings,
 }>()
 
-if (process.env.NODE_ENV === 'production') {
-    app.use('/*', cors({
-        origin: 'https://write-space-omega.vercel.app',
-        allowHeaders: ['Authorization', 'Content-Type'],
-        allowMethods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
-        credentials: true,
-    }))
-} else {
-    app.use("/*", cors({
-        origin: 'http://localhost:5173', // Your local frontend URL
-        credentials: true,
-        allowHeaders: ['Content-Type', 'Authorization'] // Good to be explicit
-    }));
-}
+app.use('/*', cors({
+  origin: (origin) => {
+    if (origin === 'https://write-space-omega.vercel.app') {
+      return origin;
+    }
+    if (origin === 'http://localhost:5173') {
+      return origin;
+    }
+    if (origin.endsWith('.vercel.app')) {
+      return origin;
+    }
+    return 'https://write-space-omega.vercel.app';
+  },
+  allowHeaders: ['Authorization', 'Content-Type'],
+  allowMethods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+}));
+
 app.route("/api/v1/user", userRouter);
 app.route("/api/v1/post", postRouter);
 
